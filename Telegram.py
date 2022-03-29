@@ -34,7 +34,7 @@ def laps(update: Update, context: CallbackContext):
         laps.start(computer_name)
         while(laps.get_password() == None):
             time.sleep(0.1)
-        update.message.reply_text(computer_name.toUpper() + ":\n" + laps.get_password())
+        update.message.reply_text(computer_name.upper() + ":\n" + laps.get_password())
 
 def jitbit(update: Update, context: CallbackContext):
     if len(context.args) < 1 or len(context.args) > 1:
