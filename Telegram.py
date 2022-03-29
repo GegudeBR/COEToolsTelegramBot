@@ -30,11 +30,11 @@ def laps(update: Update, context: CallbackContext):
         update.message.reply_text("Use: /laps (computer_name)")
     else:
         computer_name = context.args[0]
-        laps = LAPS(update)
+        laps = Laps.LAPS()
         laps.start(computer_name)
-        while(laps.password == None):
+        while(laps.get_password() == None):
             time.sleep(0.1)
-        update.message.reply_text(computer_name.toUpper() + ":\n" + laps.password)
+        update.message.reply_text(computer_name.toUpper() + ":\n" + laps.get_password())
 
 def jitbit(update: Update, context: CallbackContext):
     if len(context.args) < 1 or len(context.args) > 1:
