@@ -1,6 +1,4 @@
-import sys
-import os
-import time
+import sys, os, time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
