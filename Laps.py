@@ -10,6 +10,7 @@ class MyHandler(FileSystemEventHandler):
         #print(f'Event type: {event.event_type}  path : {event.src_path}')
 
         if event.src_path == self.laps.out_path:
+            print("[LAPS] " + self.laps.computer_name + " password retrieved")
             time.sleep(0.1)
             f = open(self.laps.out_path, "r")
             self.laps.set_password(f.readline())
@@ -33,6 +34,7 @@ class LAPS():
         f = open(self.in_path, "w")
         f.write(self.computer_name)
         f.close()
+        print("[LAPS] " + self.computer_name + " password requested")
     
     def set_password(self, password):
         self.password = password
