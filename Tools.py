@@ -13,9 +13,8 @@ class Jitbit():
     headers = {
         'Authorization' : 'Basic ' + credentials.auth
     }
-
     req = requests.get(asset_url, headers=headers)
-    self.asset_json = req.json
+    self.asset_json = req.json()
   
   def get_url(self):
     asset_id   = self.asset_json[0]['ItemID']
