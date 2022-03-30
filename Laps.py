@@ -12,7 +12,7 @@ class MyHandler(FileSystemEventHandler):
         if event.src_path == self.laps.out_path:
             time.sleep(1)
             print("[LAPS] " + self.laps.computer_name + " password retrieved")
-            f = open(self.laps.out_path, "r")
+            f = open(self.laps.out_path)
             print(f.readline())
             self.laps.set_password(f.readline())
             f.close()
