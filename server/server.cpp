@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
@@ -11,6 +10,7 @@
 #include "FileWatcher.h"
 
 using namespace std;
+
 
 string exec(const char* cmd) {
     array<char, 128> buffer;
@@ -26,7 +26,6 @@ string exec(const char* cmd) {
 }
 
 int main(int argc, char* argv[]) {
-  
   FileWatcher fw{"L:\\", chrono::milliseconds(500)};
   fw.start([] (string path_to_watch, FileStatus status) -> void {
   // Process only regular files, all other file types are ignored
@@ -35,33 +34,35 @@ int main(int argc, char* argv[]) {
     }
  
     switch(status) {
-      case FileStatus::created:
-        //cout << "File created: " << path_to_watch << '\n';
-        break;
       case FileStatus::modified:
-		cout << path_to_watch << endl;
+		    cout << path_to_watch << endl;
         if(path_to_watch == "L:\\in.laps") {
           string computer_name = "";
-          string line;
+          string line, password;
+
+          // Listen request
           ifstream request_file;
           request_file.open("L:\\in.laps", ios::in);
           while (getline (request_file,line)) {
             computer_name += line;
           }
           request_file.close();
+          cout << "[LAPS] Request for " << computer_name << endl;
 
+          // Respond request
           ofstream response_file;
           response_file.open("L:\\out.laps", ios::trunc);
           string command = "powershell \"Get-AdmPwdPassword -ComputerName " + computer_name + " | select -ExpandProperty Password\"";
-          string password = exec(command.c_str());
+          password = exec(command.c_str());
           password.erase(remove(password.begin(), password.end(), '\n'), password.end());
           response_file << password;
           response_file.close();
+
         }
-        //cout << "File modified: " << path_to_watch << '\n';
+        break;
+      case FileStatus::created:
         break;
       case FileStatus::erased:
-        //cout << "File erased: " << path_to_watch << '\n';
         break;
       default:
         cout << "Error! Unknown file status.\n";
