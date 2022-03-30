@@ -10,12 +10,11 @@ ACTLOG_BASE_URL    = 'https://tools.engr.oregonstate.edu/coetools/lablogs/labinf
 
 class Jitbit():
   def __init__(self, asset_name):
-    asset_url = COETOOL_API_URL.format(asset_name)
     data = {
         'api': credentials.api,
-        'name': credentials.auth
+        'name': credentials.asset_name
     }
-    req = requests.post(asset_url, data=data)
+    req = requests.post(COETOOL_API_URL, data=data)
     self.asset_json = req.json()
   
   def get_url(self):
