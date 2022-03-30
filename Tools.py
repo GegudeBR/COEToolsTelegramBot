@@ -3,17 +3,19 @@ import credentials
 
 JB_BASE_ASSET_URL  = 'https://support.engineering.oregonstate.edu/Assets/Edit{}'
 COETOOL_BASE_URL   = 'https://tools.engr.oregonstate.edu/coetools/jitbit/?name={}'
+COETOOL_API_URL = 'https://tools.engr.oregonstate.edu/coetools/api/'
 CYDER_BASE_URL     = 'https://cyder.oregonstate.edu/search/?search={}'
 ACTLOG_BASE_URL    = 'https://tools.engr.oregonstate.edu/coetools/lablogs/labinfo.php?hostname={}'
 
 
 class Jitbit():
   def __init__(self, asset_name):
-    asset_url = COETOOL_BASE_URL.format(asset_name)
-    headers = {
-        'Authorization' : 'Basic ' + credentials.auth
+    asset_url = COETOOL_API_URL.format(asset_name)
+    data = {
+        'api': credentials.api,
+        'name': credentials.auth
     }
-    req = requests.get(asset_url, headers=headers)
+    req = requests.post(asset_url, data=data)
     self.asset_json = req.json()
   
   def get_url(self):
