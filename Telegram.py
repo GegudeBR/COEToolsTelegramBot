@@ -26,7 +26,7 @@ def help(update: Update, context: CallbackContext):
     /log (computer_name) - To get the activity log""")
     
 def laps(update: Update, context: CallbackContext):
-    if len(context.args) < 1 or len(context.args) > 1:
+    if len(context.args) != 1:
         update.message.reply_text("Use: /laps (computer_name)")
     else:
         computer_name = context.args[0]
@@ -37,7 +37,7 @@ def laps(update: Update, context: CallbackContext):
         update.message.reply_text(computer_name.upper() + ":\n" + laps.get_password())
 
 def jitbit(update: Update, context: CallbackContext):
-    if len(context.args) < 1 or len(context.args) > 1:
+    if len(context.args) != 1:
         update.message.reply_text("Use: /jitbit (computer_name)")
     else:
         try:
@@ -48,19 +48,21 @@ def jitbit(update: Update, context: CallbackContext):
 
 
 def cyder(update: Update, context: CallbackContext):
-    if len(context.args) < 1 or len(context.args) > 1:
+    if len(context.args) != 1:
         update.message.reply_text("Use: /cyder (computer_name)")
     else:
         computer_name = context.args[0]
         update.message.reply_text(Tools.Cyder(computer_name).get_url())
            
 def log(update: Update, context: CallbackContext):
-    if len(context.args) < 1 or len(context.args) > 1:
+    if len(context.args) != 1:
         update.message.reply_text("Use: /log (computer_name)")
     else:
         computer_name = context.args[0]
         update.message.reply_text(Tools.Log(computer_name).get_url())
-        
+
+def stop(update: Update, context: CallbackContext):
+    exit(1)  
     
 def unknown(update: Update, context: CallbackContext):
     update.message.reply_text(
@@ -76,6 +78,7 @@ updater.dispatcher.add_handler(CommandHandler('laps', laps, Filters.user(usernam
 updater.dispatcher.add_handler(CommandHandler('jitbit', jitbit, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('cyder', cyder, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('log', log, Filters.user(username=credentials.telegram_user)))
+updater.dispatcher.add_handler(CommandHandler('stop', stop, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('help', help))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.text, unknown))
