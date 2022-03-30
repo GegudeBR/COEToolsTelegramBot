@@ -16,6 +16,7 @@ class MyHandler(FileSystemEventHandler):
             f = open(self.laps.out_path, "r")
             for line in f.readlines():
                 password += line
+            print(password)
             self.laps.set_password(password)
             f.close()
             self.laps.observer.stop()
