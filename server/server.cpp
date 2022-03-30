@@ -26,8 +26,8 @@ string exec(const char* cmd) {
 }
 
 int main(int argc, char* argv[]) {
-  FileWatcher fw{"L:", chrono::milliseconds(500)};
-
+  
+  FileWatcher fw{"L:\\", chrono::milliseconds(500)};
   fw.start([] (string path_to_watch, FileStatus status) -> void {
   // Process only regular files, all other file types are ignored
     if(!filesystem::is_regular_file(filesystem::path(path_to_watch)) && status != FileStatus::erased) {
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
         break;
       case FileStatus::modified:
 		cout << path_to_watch << endl;
-        if(path_to_watch == "L:\in.laps") {
+        if(path_to_watch == "L:\\in.laps") {
           string computer_name = "";
           string line;
           ifstream request_file;
@@ -53,7 +53,8 @@ int main(int argc, char* argv[]) {
           ofstream response_file;
           response_file.open("L:\\out.laps", ios::trunc);
           string command = "powershell \"Get-AdmPwdPassword -ComputerName " + computer_name + " | select -ExpandProperty Password\"";
-          string password = exec(command.c_str()).replace("\n", "");
+          string password = exec(command.c_str());
+          password.erase(remove(password.begin(), password.end(), '\n'), password.end());
           response_file << password;
           response_file.close();
         }
