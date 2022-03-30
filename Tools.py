@@ -12,7 +12,7 @@ class Jitbit():
   def __init__(self, asset_name):
     data = {
         'api': credentials.api,
-        'name': credentials.asset_name
+        'name': asset_name
     }
     req = requests.post(COETOOL_API_URL, data=data)
     self.asset_json = req.json()
