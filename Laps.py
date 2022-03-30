@@ -22,11 +22,11 @@ class MyHandler(FileSystemEventHandler):
 class LAPS():
     def __init__(self):
         self.password = None
-        self.in_path = "C:/temp/in.laps"
-        self.out_path = "C:/temp/out.laps"
+        self.in_path = "C:\\temp\\in.laps"
+        self.out_path = "C:\\temp\\out.laps"
         self.event_handler = MyHandler(self)
         self.observer = Observer()
-        self.observer.schedule(self.event_handler, path='C:/temp/', recursive=False)
+        self.observer.schedule(self.event_handler, path='C:\\temp\\', recursive=False)
         self.observer.start()
 
 
