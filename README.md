@@ -10,7 +10,7 @@ pip install python-telegram-bot
 credentials.py example:
 ```python
 telegram_key=""
-auth=""
+api=""
 telegram_user="@"
 ```
 
