@@ -47,8 +47,14 @@ int main(int argc, char* argv[]) {
             computer_name += line;
           }
           request_file.close();
-          cout << "[LAPS] Request for " << computer_name << endl;
 
+          // Password change request
+          string command = "powershell \"Password.ps1 -ComputerName " + computer_name + "\"";
+          exec(command.c_str());
+          
+          // Get password - NOT IN USE
+          /*
+          cout << "[LAPS] Request for " << computer_name << endl;
           // Respond request
           ofstream response_file;
           response_file.open("L:\\out.laps", ios::trunc);
@@ -57,7 +63,7 @@ int main(int argc, char* argv[]) {
           password.erase(remove(password.begin(), password.end(), '\n'), password.end());
           response_file << password;
           response_file.close();
-
+          */
         }
         break;
       case FileStatus::created:

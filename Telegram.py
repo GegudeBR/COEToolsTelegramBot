@@ -26,6 +26,7 @@ def help(update: Update, context: CallbackContext):
     /log (computer_name) - To get the activity log""")
     
 def laps(update: Update, context: CallbackContext):
+    return  # DISABLED
     if len(context.args) != 1:
         update.message.reply_text("Use: /laps (computer_name)")
     else:
@@ -45,6 +46,17 @@ def jitbit(update: Update, context: CallbackContext):
             update.message.reply_text(Tools.Jitbit(computer_name).get_url())
         except:
             update.message.reply_text("An error has occured.")
+
+def password(update: Update, context: CallbackContext):
+    if len(context.args) != 1:
+        update.message.reply_text("Use: /pass (computer_name)")
+    else:
+        computer_name = context.args[0]
+        f = open("C:\\temp\\in.laps", "w")
+        f.write(computer_name)
+        f.close()
+        print("[PASSWORD] Password change requested for " + computer_name)
+        update.message.reply_text("Password changed")
 
 
 def cyder(update: Update, context: CallbackContext):
@@ -74,6 +86,7 @@ def unknown_text(update: Update, context: CallbackContext):
         "Sorry I can't recognize you , you said '%s'" % update.message.text)
  
 updater.dispatcher.add_handler(CommandHandler('start', start))
+updater.dispatcher.add_handler(CommandHandler('pass', password, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('laps', laps, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('jitbit', jitbit, Filters.user(username=credentials.telegram_user)))
 updater.dispatcher.add_handler(CommandHandler('cyder', cyder, Filters.user(username=credentials.telegram_user)))

@@ -131,3 +131,4 @@ dmypy.json
 
 #Personalized
 credentials.py
+server/SecureString.txt
