@@ -49,9 +49,9 @@ int main(int argc, char* argv[]) {
           request_file.close();
 
           // Password change request
-          string command = "powershell \"Password.ps1 -ComputerName " + computer_name + "\"";
+          string command = "powershell \".\\Password.ps1 -ComputerName " + computer_name + "\"";
           exec(command.c_str());
-          
+
           // Get password - NOT IN USE
           /*
           cout << "[LAPS] Request for " << computer_name << endl;

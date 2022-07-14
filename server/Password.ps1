@@ -28,18 +28,18 @@ Exit-PSSession
 Write-Host "Custom Password Set"
 
 # Wait
-Start-Sleep -Seconds 30
+Start-Sleep -Seconds 25
 # Resetting LAPS Password 
 $ExpireTime = Get-Date
-$ExpireTime.AddMinutes(-5)
+$ExpireTime.AddMinutes(-10)
 Reset-AdmPwdPassword -ComputerName $ComputerName -WhenEffective $ExpireTime
-
+Start-Sleep -Seconds 2
 # Propagating Change
-Invoke-GPUpdate -Computer $ComputerName -RandomDelayInMinutes 0 -Force
+Invoke-GPUpdate -Computer $ComputerName -RandomDelayInMinutes 0 -Force -AsJob
 
 Enter-PSSession -Session $NewSession
 Invoke-Command -Session $NewSession -ArgumentList $Secure_Password -ScriptBlock{
-	Invoke-GPUpdate -RandomDelayInMinutes 0 -Force
+	Invoke-GPUpdate -RandomDelayInMinutes 0 -Force -AsJob
 }
 Exit-PSSession
 
