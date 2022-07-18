@@ -23,26 +23,18 @@ Invoke-Command -Session $NewSession -ArgumentList $Secure_Password -ScriptBlock{
 	param($Secure_Password)
 	$UserAccount = Get-LocalUser -Name "Administrator"
 	$UserAccount | Set-LocalUser -Password $Secure_Password
+	Invoke-GPUpdate -RandomDelayInMinutes 1 -Force -AsJob
 }
 Exit-PSSession
 Write-Host "Custom Password Set"
 
-# Wait
-Start-Sleep -Seconds 25
 # Resetting LAPS Password 
 $ExpireTime = Get-Date
-$ExpireTime.AddMinutes(-10)
+$ExpireTime.AddSeconds(20)
 Reset-AdmPwdPassword -ComputerName $ComputerName -WhenEffective $ExpireTime
 Start-Sleep -Seconds 2
 # Propagating Change
-Invoke-GPUpdate -Computer $ComputerName -RandomDelayInMinutes 0 -Force -AsJob
-
-Enter-PSSession -Session $NewSession
-Invoke-Command -Session $NewSession -ArgumentList $Secure_Password -ScriptBlock{
-	Invoke-GPUpdate -RandomDelayInMinutes 0 -Force -AsJob
-}
-Exit-PSSession
-
+Invoke-GPUpdate -Computer $ComputerName -RandomDelayInMinutes 1 -Force -AsJob
 Write-Host "LAPS Password Set"
 Remove-PSSession -Session $NewSession
 
