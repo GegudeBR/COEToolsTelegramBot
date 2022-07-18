@@ -35,7 +35,6 @@ int main(int argc, char* argv[]) {
  
     switch(status) {
       case FileStatus::modified:
-		    cout << path_to_watch << endl;
         if(path_to_watch == "L:\\in.laps") {
           string computer_name = "";
           string line, password;
@@ -51,6 +50,10 @@ int main(int argc, char* argv[]) {
           // Password change request
           string command = "powershell \".\\Password.ps1 -ComputerName " + computer_name + "\"";
           exec(command.c_str());
+
+          auto now = chrono::system_clock::now();
+          std::string formatted_time = std::format("{0:%F_%T}", now);
+          cout << "[" << formatted_time << "] " << "Password changed for " << computer_name << endl;
 
           // Get password - NOT IN USE
           /*
